@@ -1,35 +1,14 @@
 import config from "@/config";
-import { create } from "zustand";
 
+import useSpotify from "./state";
 import { SpotifyPlayer, SpotifyPlayerConstructorOptions } from "./types";
 import { bindEventsToSpotifyPlayer } from "./events";
-import { logSpotify, logSpotifyPlayer } from "./log";
-
-interface SpotifyState {
-	token: string;
-	player: SpotifyPlayer | null;
-	deviceId: string | null;
-}
-
-const useSpotify = create<SpotifyState>((set, get) => ({
-	token: import.meta.env.VITE_SPOTIFY_TOKEN,
-	player: null,
-	deviceId: null,
-}));
-
-Object.defineProperty(window, "spotifyState", {
-	value: useSpotify,
-});
-
-logSpotify("Spotify state initialized %o", useSpotify.getState());
-
-const getSpotifyToken = (): string => {
-	return useSpotify.getState().token;
-};
+import { logSpotifyPlayer } from "./log";
+import { getSpotifyToken } from "./token";
 
 const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 	// Create a global callback called onSpotifyWebPlaybackSDKReady
-	// This will be called when the SDK is ready
+	// This will be called when the SDK is ready and Spotify.Player is available
 	// <any> skips type checking on window
 	(<any>window).onSpotifyWebPlaybackSDKReady = () => {
 		// You can now initialize Spotify.Player and use the SDK
@@ -55,8 +34,4 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 	};
 };
 
-export {
-	useSpotify,
-	prepareSpotifyWebPlaybackSDKReadyCallback,
-	logSpotifyPlayer,
-};
+export { prepareSpotifyWebPlaybackSDKReadyCallback, logSpotifyPlayer };

@@ -7,6 +7,10 @@ interface SongData {
 }
 
 interface GameConfig {
+	strings: {
+		gameTitle: string;
+		gameSubTitle: string;
+	};
 	game: {
 		roundDurationInSeconds: number;
 		participants: string[];

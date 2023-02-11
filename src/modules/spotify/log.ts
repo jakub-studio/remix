@@ -9,9 +9,4 @@ const logSpotifyApi = logSpotify.extend("API");
 const logSpotifyPlayer = logSpotify.extend("player");
 const logSpotifyPlayerEvents = logSpotifyPlayer.extend("events");
 
-export {
-	logSpotify,
-	logSpotifyApi,
-	logSpotifyPlayer,
-	logSpotifyPlayerEvents
-};
+export { logSpotify, logSpotifyApi, logSpotifyPlayer, logSpotifyPlayerEvents };

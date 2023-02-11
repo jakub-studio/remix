@@ -1,9 +1,11 @@
 import { SpotifyPlayer } from "./types";
 import { logSpotifyPlayerEvents as log } from "./log";
+import useSpotify from "./state";
 
 const bindEventsToSpotifyPlayer = (player: SpotifyPlayer) => {
 	player.addListener("ready", ({ device_id }) => {
-		log("[ready] Ready with Device ID: %s", device_id);
+		useSpotify.setState({ deviceId: device_id });
+		log("[ready] Device ID updated: %s", device_id);
 	});
 
 	player.addListener("not_ready", ({ device_id }) => {
