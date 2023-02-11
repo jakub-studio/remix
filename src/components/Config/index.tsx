@@ -6,6 +6,7 @@ import initGame from "@/modules/state/init";
 import useSpotify from "@/modules/spotify/state";
 import { setSpotifyToken } from "@/modules/spotify/token";
 import { connectSpotifyPlayer } from "@/modules/spotify";
+import { progressGameFlow } from "@/modules/state";
 
 const ConfigWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
@@ -62,9 +63,17 @@ const Config: React.FC = () => {
 				setLoading(true);
 
 				setSpotifyToken(tokenValue);
-				connectSpotifyPlayer().then(() => {
-					initGame(parsed);
-				});
+				connectSpotifyPlayer()
+					.then(() => {
+						// Prepare game state/data
+						initGame(parsed);
+						// Go to title screen
+						progressGameFlow();
+					})
+					.catch(e => {
+						setLoading(false);
+						setTokenError(e);
+					});
 
 				// todo
 			} catch (e) {

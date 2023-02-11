@@ -1,4 +1,4 @@
-import { logSpotify } from "./log";
+import { logSpotify, logSpotifyPlayer } from "./log";
 import { create } from "zustand";
 
 import { SpotifyPlayer } from "./types";
@@ -17,10 +17,19 @@ const useSpotify = create<SpotifyState>((set, get) => ({
 	sdkReady: false
 }));
 
+useSpotify.subscribe(state => {
+	logSpotify("Spotify state updated %o", state);
+});
+
+// devtools/debugging
 Object.defineProperty(window, "spotifyState", {
 	value: useSpotify
 });
-
-logSpotify("Spotify state initialized %o", useSpotify.getState());
+Object.defineProperty(window, "spotifyDc", {
+	value: async () => {
+		await useSpotify.getState().player?.disconnect();
+		logSpotifyPlayer("Spotify player disconnected");
+	}
+});
 
 export default useSpotify;

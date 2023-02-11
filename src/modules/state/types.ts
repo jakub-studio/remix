@@ -10,6 +10,7 @@ interface GameConfig {
 	strings: {
 		gameTitle: string;
 		gameSubTitle: string;
+		rules: string[];
 	};
 	game: {
 		roundDurationInSeconds: number;
@@ -19,7 +20,19 @@ interface GameConfig {
 	};
 }
 
+// Changing the order of the enum values will change
+// the order in which the game flow progresses.
+// Think of it as an array as well as an enum.
+enum GameFlow {
+	CONFIG,
+	INTRO,
+	GAME,
+	LEADER_BOARD,
+	END
+}
+
 interface GameState {
+	flowState: GameFlow;
 	cache: Record<string, unknown>;
 	config: GameConfig;
 	rounds: []; // GameRound[];
@@ -29,5 +42,7 @@ interface GameState {
 		elimination: unknown;
 	};
 }
+
+export { GameFlow };
 
 export type { GameConfig, GameState };

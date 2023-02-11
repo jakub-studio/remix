@@ -1,14 +1,8 @@
 import { useState } from "react";
 import Config from "../Config";
 import Title from "../Title";
-
-enum GameFlow {
-	CONFIG,
-	INTRO,
-	GAME,
-	LEADER_BOARD,
-	END
-}
+import { GameFlow } from "@/modules/state/types";
+import useGame from "@/modules/state";
 
 const GameFlowComponents: Record<GameFlow, React.FC> = {
 	[GameFlow.CONFIG]: Config,
@@ -19,9 +13,9 @@ const GameFlowComponents: Record<GameFlow, React.FC> = {
 };
 
 const GameController: React.FC = () => {
-	const [GameFlowPosition, setGameFlowPosition] = useState(GameFlow.INTRO);
+	const flowState = useGame(s => s.flowState);
 
-	const GameFlowComponent = GameFlowComponents[GameFlowPosition];
+	const GameFlowComponent = GameFlowComponents[flowState];
 
 	return (
 		<div data-role="game-root">

@@ -40,8 +40,15 @@ const connectSpotifyPlayer = async (): Promise<void> => {
 	const { player } = useSpotify.getState();
 
 	if (player) {
-		await player.connect();
-		logSpotifyPlayer("Spotify player connected");
+		const connected = await player.connect();
+		logSpotifyPlayer("Spotify player connection result: %o", connected);
+
+		if (!connected)
+			throw new Error(
+				"Spotify player connection failed. Spotify access tokens only last 1 hour so you may need to generate a new one."
+			);
+	} else {
+		throw new Error("Spotify player not initialized");
 	}
 };
 
