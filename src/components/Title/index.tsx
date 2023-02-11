@@ -8,7 +8,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 const Title: React.FC = () => {
 	const [showRules, setShowRules] = useState<boolean>(false);
-	const { gameTitle: title, gameSubTitle: subTitle } = useGame(
+	const { gameTitle: title, gameSubTitle: subTitle, rules } = useGame(
 		s => s.config.strings
 	);
 
@@ -26,7 +26,7 @@ const Title: React.FC = () => {
 	return (
 		<div className="text-white bg-black font-bold relative w-full h-screen">
 			<img src={background} className="blur-3xl w-full h-full object-cover" />
-			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pl-20">
+			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-start pl-20">
 				<motion.div
 					style={{ opacity: 0 }}
 					animate={{
@@ -41,6 +41,8 @@ const Title: React.FC = () => {
 					<h1 className="text-9xl mb-4">{title}</h1>
 					<h2 className="text-4xl">{subTitle}</h2>
 				</motion.div>
+			</div>
+			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pl-20">
 				<motion.div
 					style={{ opacity: 0 }}
 					animate={{
@@ -54,9 +56,9 @@ const Title: React.FC = () => {
 				>
 					<h1 className="text-3xl mb-4">Game Rules</h1>
 					<ol className="text-xl list-disc">
-						<li>Press the arrow keys to move</li>
-						<li>Press the space bar to jump</li>
-						<li>Press the shift key to sprint</li>
+						{rules.map((rule, i) => (
+							<li key={i}>{rule}</li>
+						))}
 					</ol>
 				</motion.div>
 			</div>
