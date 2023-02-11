@@ -4,12 +4,18 @@ import useSpotify from "./state";
 
 const bindEventsToSpotifyPlayer = (player: SpotifyPlayer) => {
 	player.addListener("ready", ({ device_id }) => {
-		useSpotify.setState({ deviceId: device_id });
+		useSpotify.setState({
+			deviceId: device_id,
+			connected: true
+		});
 		log("[ready] Device ID updated: %s", device_id);
 	});
 
 	player.addListener("not_ready", ({ device_id }) => {
-		log("[not_ready] Device ID has gone offline: %s", device_id);
+		log("[not_ready] Disconnected with device ID: %s", device_id);
+		useSpotify.setState({
+			connected: false
+		});
 	});
 
 	player.addListener("player_state_changed", state => {

@@ -13,12 +13,14 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 	(<any>window).onSpotifyWebPlaybackSDKReady = () => {
 		// You can now initialize Spotify.Player and use the SDK
 
+		useSpotify.setState({ sdkReady: true });
+
 		const spotifyPlayerConstructorOptions: SpotifyPlayerConstructorOptions = {
 			name: config.SPOTIFY_WEB_PLAYBACK_DEVICE_NAME,
+			volume: config.SPOTIFY_WEB_PLAYBACK_DEFAULT_VOLUME,
 			getOAuthToken: callback => {
 				callback(getSpotifyToken());
-			},
-			volume: 0.5,
+			}
 		};
 
 		const player: SpotifyPlayer = new (<any>window).Spotify.Player(
@@ -34,4 +36,17 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 	};
 };
 
-export { prepareSpotifyWebPlaybackSDKReadyCallback, logSpotifyPlayer };
+const connectSpotifyPlayer = async (): Promise<void> => {
+	const { player } = useSpotify.getState();
+
+	if (player) {
+		await player.connect();
+		logSpotifyPlayer("Spotify player connected");
+	}
+};
+
+export {
+	prepareSpotifyWebPlaybackSDKReadyCallback,
+	connectSpotifyPlayer,
+	logSpotifyPlayer
+};

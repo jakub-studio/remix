@@ -127,5 +127,5 @@ export type {
 	WebPlaybackError,
 	SpotifyTrackTypes,
 	SpotifyMediaTypes,
-	SpotifyRepeatMode,
+	SpotifyRepeatMode
 };

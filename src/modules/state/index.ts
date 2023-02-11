@@ -1,17 +1,26 @@
 import { create } from "zustand";
+import { GameState, GameConfig } from "./types";
 
-interface GameState {
-	cache: Record<string, unknown>;
-	config: any; // GameConfig;
-	rounds: []; // GameRound[];
+const useGame = create<GameState>()(set => ({
+	cache: {},
+	config: {
+		strings: {
+			gameTitle: "Game Title",
+			gameSubTitle: "Game Sub Title"
+		},
+		game: {
+			roundDurationInSeconds: 20,
+			participants: [],
+			exampleSong: {},
+			songs: []
+		}
+	},
+	rounds: [],
 	current: {
-		round: number;
-		roundStage: number; // or enum
-		elimination: unknown;
-	};
-}
+		round: 0,
+		roundStage: 0,
+		elimination: null
+	}
+}));
 
-/* const useBearStore = create<GameState>()(set => ({
-	bears: 0,
-	increase: by => set(state => ({ bears: state.bears + by })),
-})); */
+export default useGame;

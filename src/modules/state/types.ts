@@ -19,4 +19,15 @@ interface GameConfig {
 	};
 }
 
-export type { GameConfig };
+interface GameState {
+	cache: Record<string, unknown>;
+	config: GameConfig;
+	rounds: []; // GameRound[];
+	current: {
+		round: number;
+		roundStage: number; // or enum
+		elimination: unknown;
+	};
+}
+
+export type { GameConfig, GameState };
