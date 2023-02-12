@@ -1,7 +1,7 @@
-import GameController from "./components/Game/Controller";
+import Controller from "./components/Controller";
 
 function App() {
-	return <GameController />;
+	return <Controller />;
 }
 
 export default App;

@@ -1,6 +1,5 @@
-import { useState } from "react";
-import Config from "../Config";
-import Title from "../Title";
+import Config from "./Config";
+import Title from "./Title";
 import { GameFlow } from "@/modules/state/types";
 import useGame from "@/modules/state";
 
@@ -12,7 +11,7 @@ const GameFlowComponents: Record<GameFlow, React.FC> = {
 	[GameFlow.END]: () => <div>End</div>
 };
 
-const GameController: React.FC = () => {
+const Controller: React.FC = () => {
 	const flowState = useGame(s => s.flowState);
 
 	const GameFlowComponent = GameFlowComponents[flowState];
@@ -24,4 +23,4 @@ const GameController: React.FC = () => {
 	);
 };
 
-export default GameController;
+export default Controller;

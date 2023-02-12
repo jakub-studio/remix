@@ -13,14 +13,19 @@ const useGame = create<GameState>()(set => ({
 		game: {
 			roundDurationInSeconds: 20,
 			participants: [],
-			exampleSong: {},
+			exampleSong: {
+				// Kendrick Lamar - Money Trees
+				spotifyURL: "https://open.spotify.com/track/2HbKqm4o0w5wEeEFXm2sD4",
+				submitter: "Example Submitter",
+				offset: [1, 21] // Starts on "It go Halle Berry or Hallelujah"
+			},
 			songs: []
 		}
 	},
 	rounds: [],
 	current: {
-		round: 0,
-		roundStage: 0,
+		round: -1,
+		roundSection: 0,
 		elimination: null
 	}
 }));

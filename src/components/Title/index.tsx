@@ -5,12 +5,15 @@ import { motion } from "framer-motion";
 import useGame, { progressGameFlow } from "@/modules/state";
 import background from "@/assets/background.jpeg";
 import { useHotkeys } from "react-hotkeys-hook";
+import ImageBackdrop from "../ImageBackdrop";
 
 const Title: React.FC = () => {
 	const [showRules, setShowRules] = useState<boolean>(false);
-	const { gameTitle: title, gameSubTitle: subTitle, rules } = useGame(
-		s => s.config.strings
-	);
+	const {
+		gameTitle: title,
+		gameSubTitle: subTitle,
+		rules
+	} = useGame(s => s.config.strings);
 
 	useHotkeys("ArrowRight", () => {
 		// toggle rules
@@ -24,8 +27,7 @@ const Title: React.FC = () => {
 	});
 
 	return (
-		<div className="text-white bg-black font-bold relative w-full h-screen">
-			<img src={background} className="blur-3xl w-full h-full object-cover" />
+		<ImageBackdrop imageSrc={background}>
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-start pl-20">
 				<motion.div
 					style={{ opacity: 0 }}
@@ -62,7 +64,7 @@ const Title: React.FC = () => {
 					</ol>
 				</motion.div>
 			</div>
-		</div>
+		</ImageBackdrop>
 	);
 };
 

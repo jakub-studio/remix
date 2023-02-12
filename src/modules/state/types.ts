@@ -1,9 +1,15 @@
 import type { TimeArray } from "@/modules/time";
+import type { Track } from "@/modules/spotify/types";
 
 interface SongData {
 	spotifyURL: string;
 	submitter: string;
 	offset: TimeArray;
+}
+
+interface SongDataExpanded extends SongData {
+	uri: string;
+	id: string;
 }
 
 interface GameConfig {
@@ -31,18 +37,32 @@ enum GameFlow {
 	END
 }
 
+enum RoundSection {
+	START,
+	PLAY,
+	ANSWER
+}
+
 interface GameState {
 	flowState: GameFlow;
 	cache: Record<string, unknown>;
 	config: GameConfig;
-	rounds: []; // GameRound[];
+	rounds: SongDataExpanded[];
 	current: {
 		round: number;
-		roundStage: number; // or enum
-		elimination: unknown;
+		roundSection: RoundSection;
+		songData: SongDataExpanded;
+		trackData: Track;
 	};
 }
 
-export { GameFlow };
+// enums must be exported regularly as they get transpiled to
+// regular objects.
+export { GameFlow, RoundSection };
 
-export type { GameConfig, GameState };
+export type {
+	GameConfig,
+	GameState,
+	SongData,
+	SongDataExpanded
+};
