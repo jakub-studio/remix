@@ -26,6 +26,13 @@ interface GameConfig {
 	};
 }
 
+interface RoundData {
+	round: number;
+	roundSection: RoundSection;
+	songData: SongDataExpanded;
+	trackData: Track;
+}
+
 // Changing the order of the enum values will change
 // the order in which the game flow progresses.
 // Think of it as an array as well as an enum.
@@ -48,12 +55,8 @@ interface GameState {
 	cache: Record<string, unknown>;
 	config: GameConfig;
 	rounds: SongDataExpanded[];
-	current: {
-		round: number;
-		roundSection: RoundSection;
-		songData: SongDataExpanded;
-		trackData: Track;
-	};
+	current: RoundData;
+	nextRoundCache: RoundData;
 }
 
 // enums must be exported regularly as they get transpiled to
@@ -64,5 +67,6 @@ export type {
 	GameConfig,
 	GameState,
 	SongData,
-	SongDataExpanded
+	SongDataExpanded,
+	RoundData
 };

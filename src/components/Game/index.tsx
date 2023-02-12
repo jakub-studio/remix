@@ -17,7 +17,9 @@ const Game = () => {
 
 	return (
 		<ImageBackdrop imageSrc={background}>
-			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-20"></div>
+			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-20">
+				
+			</div>
 		</ImageBackdrop>
 	);
 };
