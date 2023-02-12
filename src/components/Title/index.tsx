@@ -28,8 +28,7 @@ const Title: React.FC = () => {
 
 	return (
 		<ImageBackdrop imageSrc={background}>
-
-			{ /* Title */ }
+			{/* Title */}
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-start pl-20">
 				<motion.div
 					style={{ opacity: 0 }}
@@ -47,7 +46,7 @@ const Title: React.FC = () => {
 				</motion.div>
 			</div>
 
-			{ /* Rules */}
+			{/* Rules */}
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pl-20">
 				<motion.div
 					initial={false}

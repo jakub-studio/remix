@@ -63,10 +63,4 @@ interface GameState {
 // regular objects.
 export { GameFlow, RoundSection };
 
-export type {
-	GameConfig,
-	GameState,
-	SongData,
-	SongDataExpanded,
-	RoundData
-};
+export type { GameConfig, GameState, SongData, SongDataExpanded, RoundData };

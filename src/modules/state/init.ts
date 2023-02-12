@@ -16,7 +16,9 @@ const initGame = async (config: GameConfig): Promise<void> => {
 		};
 	});
 
-	const exampleSongData = extractDataFromSpotifyURL(config.game.exampleSong.spotifyURL);
+	const exampleSongData = extractDataFromSpotifyURL(
+		config.game.exampleSong.spotifyURL
+	);
 	const trackData = await requestTrackData(exampleSongData.id);
 
 	useGame.setState({
