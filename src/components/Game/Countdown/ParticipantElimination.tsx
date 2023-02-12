@@ -17,14 +17,9 @@ import config from "@/config";
 import useGame, { progressRoundSection } from "@/modules/state";
 import useInterval from "@/hooks/useInterval";
 import c from "clsx";
-import {
-	getRandomElementOfArray,
-	removeElementOfArrayByIndex
-} from "@/util";
+import { getRandomElementOfArray, removeElementOfArrayByIndex } from "@/util";
 
-
-
-export const ParticipantElimination: React.FC<CountdownProps> = ({}) => {
+export const ParticipantElimination: React.FC = () => {
 	const gameState = useGame();
 	const participants = gameState.config.game.participants;
 
@@ -83,5 +78,3 @@ export const ParticipantElimination: React.FC<CountdownProps> = ({}) => {
 		</div>
 	);
 };
-
-export type { CountdownProps };

@@ -1,12 +1,23 @@
 import useGame from "@/modules/state";
+import { RoundSection } from "@/modules/state/types";
+import { useEffect, useState } from "react";
 import AlbumArt from "./AlbumArt";
+
+
+
 
 const PlaybackDisplay = () => {
 	const gameState = useGame();
+	const [flip, setFlip] = useState(false);
+
+	useEffect(() => {
+		gameState.current.roundSection === RoundSection.ANSWER && setTimeout(() => setFlip(true), 2250);
+	}, [gameState])
+
 	return (
 		<div className="w-full flex flex-col items-center">
 			<AlbumArt
-				flip={false}
+				flip={flip}
 				albumArtUrl={gameState.current.trackData.album.images[0].url}
 			>
 				{gameState.current.songData.submitter}

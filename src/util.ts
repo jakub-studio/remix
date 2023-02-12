@@ -15,8 +15,9 @@ export const removeElementOfArrayByIndex = <T>(
 	array: T[],
 	index: number
 ): T[] => {
-	// is this the fastest way?
-	return array.filter((_, i) => i !== index);
+	const newArray = [...array];
+	newArray.splice(index, 1);
+	return newArray;
 };
 
 export const getRandomElementOfArray = <T>(array: T[]): T => {

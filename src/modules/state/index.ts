@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GameState, GameFlow } from "./types";
+import { GameState, GameFlow, RoundData, RoundSection } from "./types";
 import createLog from "debug";
 
 const logState = createLog("game-state");
@@ -155,12 +155,25 @@ export const progressRoundSection = (): void => {
 	});
 };
 
+export const generateRoundData = async (): RoundData => {
+	return {
+		round: 10,
+		roundSection: RoundSection.START,
+		songData: null,
+		trackData: null,
+	}
+};
+
+
+
 export const prepareNextRoundData = (): void => {
 	useGame.setState(state => {
 		const { nextRoundCache } = state;
+		const nextRoundCacheIsAvailable = Object.hasOwn(nextRoundCache, "trackData");
 
+		const newRound = nextRoundCacheIsAvailable ? nextRoundCache : generateRoundData();
 		return {
-			current: nextRoundCache
+			current: newRound,
 		};
 	});
 };

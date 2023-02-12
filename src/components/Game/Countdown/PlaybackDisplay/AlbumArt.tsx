@@ -39,7 +39,7 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ albumArtUrl, flip, children }) => {
 				}}
 				className={c(
 					albumArtFaceClassName,
-					"flex justify-center items-center bg-neutral-900 text-neutral-100 font-bold text-3xl"
+					"flex justify-center items-center bg-neutral-900 text-neutral-100 font-bold text-5xl"
 				)}
 				style={backfaceHidden}
 			>

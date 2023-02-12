@@ -20,25 +20,21 @@ const Game = () => {
 	const { current: currentRound } = useGame();
 	const { roundSection } = currentRound;
 
-	useHotkeys("ArrowRight", () => {
-		if (roundSection === RoundSection.ANSWER) {
-			// start next round
-		}
-	});
+	const bgImage = currentRound.trackData.album.images[
+		currentRound.trackData.album.images.length - 1
+	].url;
 
 	return (
-		<ImageBackdrop imageSrc={background}>
+		<ImageBackdrop imageSrc={bgImage}>
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-20 drop-shadow-md">
-				{/* Start / Round Indicator */}
-				{roundSection === RoundSection.START && (
+				{roundSection === RoundSection.START ? (
 					<RoundIndicator
 						round={currentRound}
 						onComplete={progressRoundSection}
 					/>
+				) : (
+					<Countdown />
 				)}
-
-				{/* Countdown */}
-				{roundSection === RoundSection.PLAY && <Countdown />}
 			</div>
 		</ImageBackdrop>
 	);
