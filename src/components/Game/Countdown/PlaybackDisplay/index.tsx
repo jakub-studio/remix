@@ -39,7 +39,7 @@ const PlaybackDisplay = () => {
 						);
 					})}
 				</div>
-				<div className="mt-2 text-xl uppercase tracking-wider font-medium">
+				<div className="mt-2 text-lg uppercase tracking-wider font-medium">
 					<span>
 						{gameState.current.trackData.album.name},{" "}
 						{gameState.current.trackData.album.release_date}

@@ -62,7 +62,7 @@ export const ParticipantElimination: React.FC = () => {
 
 	return (
 		<div className="h-full w-full">
-			<div className="flex flex-col gap-6 h-full flex-wrap justify-evenly font-medium text-4xl">
+			<div className="flex flex-col gap-6 h-full flex-wrap justify-evenly font-medium text-2xl">
 				{participants.map(participant => (
 					<div
 						key={participant}

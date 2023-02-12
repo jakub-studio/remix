@@ -9,7 +9,7 @@ interface AlbumArtProps extends PropsWithChildren {
 
 const albumArtFaceClassName = "absolute w-full h-full";
 const backfaceHidden: CSSProperties = { backfaceVisibility: "hidden" };
-const albumArtSize = "512px";
+const albumArtSize = "400px";
 
 const AlbumArt: React.FC<AlbumArtProps> = ({ albumArtUrl, flip, children }) => {
 	return (
@@ -39,7 +39,7 @@ const AlbumArt: React.FC<AlbumArtProps> = ({ albumArtUrl, flip, children }) => {
 				}}
 				className={c(
 					albumArtFaceClassName,
-					"flex justify-center items-center bg-neutral-900 text-neutral-100 font-bold text-5xl"
+					"flex justify-center items-center bg-neutral-900 text-neutral-100 font-bold text-5xl p-4 text-center"
 				)}
 				style={backfaceHidden}
 			>
