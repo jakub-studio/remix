@@ -57,7 +57,7 @@ export const RoundIndicatorInner: React.FC<RoundIndicatorProps> = ({
 	const roundString =
 		roundIndex === -1
 			? "Example Round"
-			: (roundIndex + 1).toString().padStart(2, "0");
+			: "Round" + (roundIndex + 1);
 
 	const roundSubText =
 		roundIndex === -1 ? "No points will be awarded" : `of ${useGame.getState().rounds.length}`;
@@ -70,7 +70,7 @@ export const RoundIndicatorInner: React.FC<RoundIndicatorProps> = ({
 			exit={{ opacity: 0, y: -100 }}
 			transition={{ duration: 0.4, bounce: 0, type: "spring" }}
 		>
-			<div className="text-8xl">Round {roundString}</div>
+			<div className="text-8xl">{roundString}</div>
 			<div className="text-3xl mt-6 font-medium">{roundSubText}</div>
 		</motion.div>
 	);

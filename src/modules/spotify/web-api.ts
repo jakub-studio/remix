@@ -9,6 +9,7 @@ export const getTrackRequestUrl = (id: string): string => {
 };
 
 export const playbackUrl = WEB_API_BASE + "/me/player/play";
+export const tracksUrl = WEB_API_BASE + "/tracks";
 
 /** 
  * Fetches track data from the Spotify Web API.
@@ -36,6 +37,23 @@ export const requestTrackData = async (id: string): Promise<Track> => {
 	const data = await response.json();
 	return data;
 };
+
+export const requestTracksData = async (ids: string[]): Promise<Track[]> => {
+	const response = await fetch(tracksUrl + "?ids=" + encodeURIComponent(ids.join(",")), {
+		method: "GET",
+		headers: {
+			"Authorization": `Bearer ${getSpotifyToken()}`,
+			"Content-Type": "application/json"
+		},
+	});
+	
+	if (!response.ok) {
+		throw new Error(response.statusText);
+	}
+
+	const data = await response.json();
+	return data.tracks;
+}
 
 export const playTrack = async (uri: string, offset?: number): Promise<void> => {
 	const body: Record<string, unknown> = {
