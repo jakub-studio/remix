@@ -56,7 +56,6 @@ interface GameState {
 	config: GameConfig;
 	rounds: SongDataExpanded[];
 	current: RoundData;
-	nextRoundCache: RoundData;
 }
 
 // enums must be exported regularly as they get transpiled to

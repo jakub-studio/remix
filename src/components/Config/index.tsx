@@ -61,6 +61,7 @@ const Config: React.FC = () => {
 				const parsed = JSON.parse(configValue);
 
 				setLoading(true);
+				useSpotify.getState().player?.activateElement();
 
 				setSpotifyToken(tokenValue);
 				connectSpotifyPlayer()

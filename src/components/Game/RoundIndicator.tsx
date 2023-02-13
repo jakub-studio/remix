@@ -23,6 +23,7 @@ export const RoundIndicator: React.FC<RoundIndicatorProps> = ({
 	useTimeout(() => {
 		setShowText(false);
 	}, config.ROUND_INDICATOR_DISPLAY_TIME_IN_SECONDS * 1000);
+	
 
 	return (
 		<AnimatePresence>

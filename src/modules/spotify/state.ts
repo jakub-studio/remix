@@ -32,4 +32,19 @@ Object.defineProperty(window, "spotifyDc", {
 	}
 });
 
+export const setVolume = async (volume: number): Promise<void> => {
+	const { player } = useSpotify.getState();
+	if (!player) return;
+
+	await player.setVolume(volume);
+};
+
+
+export const pause = async (): Promise<void> => {
+	const { player } = useSpotify.getState();
+	if (!player) return;
+
+	await player.pause();
+};
+
 export default useSpotify;

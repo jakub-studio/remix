@@ -12,6 +12,7 @@ import useGame from "@/modules/state";
 import { ParticipantElimination } from "./ParticipantElimination";
 import PlaybackDisplay from "./PlaybackDisplay";
 import { useHotkeys } from "react-hotkeys-hook";
+import { pause } from "@/modules/spotify/state";
 
 interface CountdownProps {}
 
@@ -22,6 +23,7 @@ export const Countdown: React.FC<CountdownProps> = ({}) => {
 	useHotkeys("ArrowRight", () => {
 		if (roundSection !== RoundSection.ANSWER) return;
 		
+		pause();
 		setShowPlayback(false);
 	});
 

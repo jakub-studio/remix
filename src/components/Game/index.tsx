@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useHotkeys } from "react-hotkeys-hook";
 import ImageBackdrop from "../ImageBackdrop";
@@ -9,12 +9,14 @@ import useGame, {
 	progressGameFlow,
 	progressRoundSection
 } from "@/modules/state";
-import background from "@/assets/background.jpeg";
 import { RoundIndicator } from "./RoundIndicator";
 import { RoundSection } from "@/modules/state/types";
 import { Countdown } from "./Countdown";
+import { playTrack } from "@/modules/spotify/web-api";
 
 // drop-shadow(0px 2px 6px rgba(0,0,0,0.15))
+
+
 
 const Game = () => {
 	const { current: currentRound } = useGame();
@@ -24,9 +26,17 @@ const Game = () => {
 		currentRound.trackData.album.images.length - 1
 	].url;
 
+/* 	const onRoundIndicatorComplete = useCallback(() => {
+		progressRoundSection();
+	}, [currentRound.songData.uri]); */
+
+	useEffect(() => {
+		playTrack(currentRound.songData.uri);
+	}, [currentRound.songData.uri]);
+
 	return (
 		<ImageBackdrop imageSrc={bgImage}>
-			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-20 drop-shadow-md">
+			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-10 drop-shadow-md">
 				{roundSection === RoundSection.START ? (
 					<RoundIndicator
 						round={currentRound}

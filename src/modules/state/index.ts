@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { GameState, GameFlow, RoundData, RoundSection } from "./types";
 import createLog from "debug";
+import { requestTrackData } from "../spotify/web-api";
 
 const logState = createLog("game-state");
 
 const useGame = create<GameState>()(set => ({
-	flowState: GameFlow.INTRO,
+	flowState: GameFlow.CONFIG,
 	cache: {},
 	config: {
 		strings: {
@@ -127,8 +128,6 @@ const useGame = create<GameState>()(set => ({
 			uri: "spotify:track:2HbKqm4o0w5wEeEFXm2sD4"
 		}
 	},
-	// @ts-ignore
-	nextRoundCache: {}
 }));
 
 Object.defineProperty(window, "gameState", {
@@ -155,18 +154,33 @@ export const progressRoundSection = (): void => {
 	});
 };
 
-export const generateRoundData = async (): RoundData => {
+/* export const generateRoundData = async (): RoundData => {
 	return {
 		round: 10,
 		roundSection: RoundSection.START,
 		songData: null,
 		trackData: null,
 	}
-};
+}; */
 
 
+export const cacheSpotifyTrack = async (id: string): Promise<void> => {
+	const data = await requestTrackData(id);
 
-export const prepareNextRoundData = (): void => {
+	useGame.setState(state => {
+		const cache = {
+			...state.cache,
+			[data.uri]: data
+		}
+
+		return {
+			cache
+		}
+	});
+}
+
+
+/* export const prepareNextRoundData = (): void => {
 	useGame.setState(state => {
 		const { nextRoundCache } = state;
 		const nextRoundCacheIsAvailable = Object.hasOwn(nextRoundCache, "trackData");
@@ -176,6 +190,6 @@ export const prepareNextRoundData = (): void => {
 			current: newRound,
 		};
 	});
-};
+}; */
 
 export default useGame;

@@ -1,17 +1,24 @@
+import { setVolume } from "@/modules/spotify/state";
 import useGame from "@/modules/state";
 import { RoundSection } from "@/modules/state/types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AlbumArt from "./AlbumArt";
-
-
-
 
 const PlaybackDisplay = () => {
 	const gameState = useGame();
 	const [flip, setFlip] = useState(false);
 
 	useEffect(() => {
-		gameState.current.roundSection === RoundSection.ANSWER && setTimeout(() => setFlip(true), 2250);
+		if (gameState.current.roundSection !== RoundSection.PLAY) return;
+
+		setTimeout(() => {
+			setFlip(true)
+			setVolume(0.25);
+		}, 2250);
+	}, [gameState]);
+
+	const releaseDate = useMemo(() => {
+		return gameState.current.trackData.album.release_date.split("-")[0];
 	}, [gameState])
 
 	return (
@@ -23,7 +30,7 @@ const PlaybackDisplay = () => {
 				{gameState.current.songData.submitter}
 			</AlbumArt>
 			<div className="w-full flex flex-col items-center mt-8">
-				<h1 className="font-bold text-5xl mb-8">
+				<h1 className="font-bold text-5xl mb-8 text-center">
 					{gameState.current.trackData.name}
 				</h1>
 				<div>
@@ -42,7 +49,7 @@ const PlaybackDisplay = () => {
 				<div className="mt-2 text-lg uppercase tracking-wider font-medium">
 					<span>
 						{gameState.current.trackData.album.name},{" "}
-						{gameState.current.trackData.album.release_date}
+						{releaseDate}
 					</span>
 				</div>
 			</div>

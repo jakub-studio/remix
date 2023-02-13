@@ -61,7 +61,7 @@ const Title: React.FC = () => {
 					}}
 				>
 					<h1 className="text-3xl mb-4">Game Rules</h1>
-					<ol className="text-xl list-disc">
+					<ol className="text-xl list-disc max-w-md">
 						{rules.map((rule, i) => (
 							<li key={i}>{rule}</li>
 						))}
