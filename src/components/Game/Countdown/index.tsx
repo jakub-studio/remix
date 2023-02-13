@@ -8,7 +8,7 @@ import { RoundData, RoundSection } from "@/modules/state/types";
 import { useEffect, useMemo, useState } from "react";
 import useTimeout from "@/hooks/useTimeout";
 import config from "@/config";
-import useGame from "@/modules/state";
+import useGame, { progressToNextRound } from "@/modules/state";
 import { ParticipantElimination } from "./ParticipantElimination";
 import PlaybackDisplay from "./PlaybackDisplay";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -25,6 +25,10 @@ export const Countdown: React.FC<CountdownProps> = ({}) => {
 		
 		pause();
 		setShowPlayback(false);
+
+		setTimeout(() => {
+			progressToNextRound();
+		}, 1000);
 	});
 
 	return (

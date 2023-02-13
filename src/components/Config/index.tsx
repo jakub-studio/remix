@@ -4,9 +4,9 @@ import c from "clsx";
 import initGame from "@/modules/state/init";
 
 import useSpotify from "@/modules/spotify/state";
-import { setSpotifyToken } from "@/modules/spotify/token";
+import { getSpotifyToken, setSpotifyToken } from "@/modules/spotify/token";
 import { connectSpotifyPlayer } from "@/modules/spotify";
-import { progressGameFlow } from "@/modules/state";
+import useGame, { progressGameFlow } from "@/modules/state";
 
 const ConfigWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 	return (

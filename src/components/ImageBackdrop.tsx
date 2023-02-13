@@ -12,7 +12,7 @@ const ImageBackdrop: React.FC<ImageBackdropProps> = ({
 		<div className="text-white bg-black font-bold relative w-full h-screen">
 			<img
 				src={imageSrc}
-				className="blur-3xl w-full h-full object-cover"
+				className="blur-3xl w-full h-full object-cover opacity-80"
 				alt="Backdrop"
 			/>
 			{children}

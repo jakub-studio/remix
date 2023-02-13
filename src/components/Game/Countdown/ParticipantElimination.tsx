@@ -17,7 +17,7 @@ import config from "@/config";
 import useGame, { progressRoundSection } from "@/modules/state";
 import useInterval from "@/hooks/useInterval";
 import c from "clsx";
-import { getRandomElementOfArray, removeElementOfArrayByIndex } from "@/util";
+import { getRandomElementOfArray, removeElementOfArrayByIndex, splitArrayIntoChunks } from "@/util";
 
 export const ParticipantElimination: React.FC = () => {
 	const gameState = useGame();
@@ -60,10 +60,16 @@ export const ParticipantElimination: React.FC = () => {
 
 	useInterval(eliminateParticipant, eliminationDelay);
 
+	const columns = splitArrayIntoChunks(participants, 8);
+
 	return (
-		<div className="h-full w-full">
-			<div className="flex flex-col gap-6 h-full flex-wrap justify-evenly font-medium text-2xl">
-				{participants.map(participant => (
+		<div className="h-full w-full flex gap-16 xl:gap-24">
+			{columns.map((column, i) => (
+				<div
+					key={i}
+					className="flex flex-col gap-6 h-full flex-wrap justify-evenly font-medium text-2xl xl:text-4xl"
+				>
+					{column.map(participant => (
 					<div
 						key={participant}
 						className={c("transition-opacity duration-200", {
@@ -74,7 +80,8 @@ export const ParticipantElimination: React.FC = () => {
 						{participant}
 					</div>
 				))}
-			</div>
+				</div>
+			))}
 		</div>
 	);
 };

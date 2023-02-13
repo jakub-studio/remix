@@ -1,7 +1,9 @@
 import { create } from "zustand";
-import { GameState, GameFlow, RoundData, RoundSection } from "./types";
+import { GameState, GameFlow, RoundData, RoundSection, SongDataExpanded } from "./types";
 import createLog from "debug";
 import { requestTrackData } from "../spotify/web-api";
+import { extractDataFromSpotifyURL } from "../spotify/uri";
+import { Track } from "../spotify/types";
 
 const logState = createLog("game-state");
 
@@ -154,15 +156,37 @@ export const progressRoundSection = (): void => {
 	});
 };
 
-/* export const generateRoundData = async (): RoundData => {
-	return {
-		round: 10,
-		roundSection: RoundSection.START,
-		songData: null,
-		trackData: null,
-	}
-}; */
+export const generateRoundData = (songIndex: number): RoundData => {
+	const gameState = useGame.getState();
+	const song = gameState.config.game.songs[songIndex];
 
+	const songDataExpanded: SongDataExpanded = Object.assign(extractDataFromSpotifyURL(song.spotifyURL), song)
+
+	return {
+		round: songIndex,
+		roundSection: RoundSection.START,
+		songData: songDataExpanded,
+		trackData: gameState.cache[songDataExpanded.uri] as Track,
+	}
+}; 
+
+export const progressToNextRound = (): void => {
+	useGame.setState(state => {
+		const { current } = state;
+		const nextRound = current.round + 1;
+
+		if (nextRound >= state.config.game.songs.length) {
+			progressGameFlow();
+			return {};
+		}
+
+		const nextRoundData = generateRoundData(nextRound);
+
+		return {
+			current: nextRoundData,
+		}
+	});
+}
 
 export const cacheSpotifyTrack = async (id: string): Promise<void> => {
 	const data = await requestTrackData(id);
@@ -177,6 +201,15 @@ export const cacheSpotifyTrack = async (id: string): Promise<void> => {
 			cache
 		}
 	});
+}
+
+export const cacheNextRoundSpotifyTrack = async (currentRound: number): Promise<void> => {
+	const nextRoundIndex = currentRound + 1;
+	const nextRound = useGame.getState().rounds[nextRoundIndex];
+
+	if (!nextRound) return;
+
+	await cacheSpotifyTrack(nextRound.id);
 }
 
 

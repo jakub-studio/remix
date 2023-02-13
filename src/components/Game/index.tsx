@@ -6,6 +6,7 @@ import ImageBackdrop from "../ImageBackdrop";
 import { motion } from "framer-motion";
 
 import useGame, {
+	cacheNextRoundSpotifyTrack,
 	progressGameFlow,
 	progressRoundSection
 } from "@/modules/state";
@@ -13,10 +14,11 @@ import { RoundIndicator } from "./RoundIndicator";
 import { RoundSection } from "@/modules/state/types";
 import { Countdown } from "./Countdown";
 import { playTrack } from "@/modules/spotify/web-api";
+import config from "@/config";
+import { setVolume } from "@/modules/spotify/state";
+import { convertTimeArrayToMs } from "@/modules/time";
 
 // drop-shadow(0px 2px 6px rgba(0,0,0,0.15))
-
-
 
 const Game = () => {
 	const { current: currentRound } = useGame();
@@ -31,8 +33,10 @@ const Game = () => {
 	}, [currentRound.songData.uri]); */
 
 	useEffect(() => {
-		playTrack(currentRound.songData.uri);
-	}, [currentRound.songData.uri]);
+		playTrack(currentRound.songData.uri, currentRound.songData.offset ? convertTimeArrayToMs(currentRound.songData.offset) : void 0);
+		setVolume(config.SPOTIFY_WEB_PLAYBACK_VOLUME);
+		cacheNextRoundSpotifyTrack(currentRound.round);
+	}, [currentRound.songData.uri, currentRound.songData.offset, currentRound.round]);
 
 	return (
 		<ImageBackdrop imageSrc={bgImage}>

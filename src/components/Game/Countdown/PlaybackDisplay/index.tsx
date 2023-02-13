@@ -1,3 +1,4 @@
+import config from "@/config";
 import { setVolume } from "@/modules/spotify/state";
 import useGame from "@/modules/state";
 import { RoundSection } from "@/modules/state/types";
@@ -9,11 +10,11 @@ const PlaybackDisplay = () => {
 	const [flip, setFlip] = useState(false);
 
 	useEffect(() => {
-		if (gameState.current.roundSection !== RoundSection.PLAY) return;
+		if (gameState.current.roundSection !== RoundSection.ANSWER) return;
 
 		setTimeout(() => {
 			setFlip(true)
-			setVolume(0.25);
+			setVolume(config.SPOTIFY_WEB_PLAYBACK_VOLUME_DECREASED);
 		}, 2250);
 	}, [gameState]);
 
@@ -33,7 +34,7 @@ const PlaybackDisplay = () => {
 				<h1 className="font-bold text-5xl mb-8 text-center">
 					{gameState.current.trackData.name}
 				</h1>
-				<div>
+				<div className="text-center">
 					{gameState.current.trackData.artists.map((artist, index) => {
 						return (
 							<span key={index} className="font-medium text-3xl mb-4">{`${
