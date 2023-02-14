@@ -23,7 +23,7 @@ const PlaybackDisplay = () => {
 	}, [roundData.trackData.album.release_date]);
 
 	return (
-		<div className="w-full flex flex-col items-center">
+		<div className="w-full flex flex-col items-center min-w-[650px]">
 			<AlbumArt
 				flip={flip}
 				albumArtUrl={roundData.trackData.album.images[0].url}

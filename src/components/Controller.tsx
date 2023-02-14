@@ -4,13 +4,15 @@ import useGame from "@/modules/state";
 import Config from "@/components/Config";
 import Title from "@/components/Title";
 import Game from "@/components/Game";
+import EndScreen from "./End";
+import Leaderboard from "./Leaderboard";
 
 const GameFlowComponents: Record<GameFlow, React.FC> = {
 	[GameFlow.CONFIG]: Config,
 	[GameFlow.INTRO]: Title,
 	[GameFlow.GAME]: Game,
-	[GameFlow.LEADER_BOARD]: () => <div>Leader Board</div>,
-	[GameFlow.END]: () => <div>End</div>
+	[GameFlow.LEADER_BOARD]: Leaderboard,
+	[GameFlow.END]: EndScreen
 };
 
 const Controller: React.FC = () => {
