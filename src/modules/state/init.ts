@@ -9,7 +9,7 @@ import globalConfig from "@/config";
 
 const initGame = async (givenConfig: GameConfig): Promise<void> => {
 
-	const roundsWithURI: SongDataExpanded[] = givenConfig.game.songs.map(song => {
+	const songsWithDataExpanded: SongDataExpanded[] = givenConfig.game.songs.map(song => {
 		const data = extractDataFromSpotifyURL(song.spotifyURL);
 
 		return {
@@ -21,22 +21,19 @@ const initGame = async (givenConfig: GameConfig): Promise<void> => {
 	const exampleSongData = extractDataFromSpotifyURL(
 		givenConfig.game.exampleSong.spotifyURL
 	);
-	const trackData = await requestTrackData(exampleSongData.id);
+	const exampleTrackData = await requestTrackData(exampleSongData.id);
 
-	const gameSongIds = roundsWithURI.map(song => song.id);
-	const dataAll = await requestTracksData(gameSongIds);
+	const gameSongIds = songsWithDataExpanded.map(song => song.id);
+	const allSongsTrackData = await requestTracksData(gameSongIds);
 
-	console.log(gameSongIds);
-	console.log(dataAll);
-
-	const cache: Record<string, Track> = {};
-	dataAll.forEach(track => {
-		cache[track.uri] = track;
+	const trackDataCache: Record<string, Track> = {
+		[exampleTrackData.uri]: exampleTrackData
+	};
+	allSongsTrackData.forEach(track => {
+		trackDataCache[track.uri] = track;
 	});
 
-	cache[exampleSongData.uri] = trackData;
-
-	const roundsArray = roundsWithURI.map((round, index) => generateRoundData2(round, index, cache));
+	const roundsArray = songsWithDataExpanded.map((round, index) => generateRoundData2(round, index, trackDataCache));
 
 	useGame.setState({
 		config: givenConfig,
@@ -45,9 +42,9 @@ const initGame = async (givenConfig: GameConfig): Promise<void> => {
 			round: -1, // -1 indicates the example round
 			roundSection: RoundSection.START,
 			songData: Object.assign(exampleSongData, givenConfig.game.exampleSong),
-			trackData
+			trackData: exampleTrackData
 		},
-		cache
+		cache: trackDataCache
 	});
 };
 
