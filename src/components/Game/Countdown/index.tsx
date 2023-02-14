@@ -1,28 +1,23 @@
 import {
 	motion,
 	AnimatePresence,
-	useIsPresent,
-	usePresence
 } from "framer-motion";
-import { RoundData, RoundSection } from "@/modules/state/types";
-import { useEffect, useMemo, useState } from "react";
-import useTimeout from "@/hooks/useTimeout";
-import config from "@/config";
-import useGame, { progressToNextRound } from "@/modules/state";
+import {  RoundSection } from "@/modules/state/types";
+import { useState } from "react";
+import { progressToNextRound } from "@/modules/state";
 import { ParticipantElimination } from "./ParticipantElimination";
 import PlaybackDisplay from "./PlaybackDisplay";
 import { useHotkeys } from "react-hotkeys-hook";
 import { pause } from "@/modules/spotify/state";
+import { useCurrentRound } from "@/hooks/useCurrentRound";
 
-interface CountdownProps {}
-
-export const Countdown: React.FC<CountdownProps> = ({}) => {
+export const Countdown: React.FC = () => {
 	const [showPlayback, setShowPlayback] = useState(true);
-	const roundSection = useGame(s => s.current.roundSection);
+	const { section: roundSection } = useCurrentRound();
 
 	useHotkeys("ArrowRight", () => {
 		if (roundSection !== RoundSection.ANSWER) return;
-		
+
 		pause();
 		setShowPlayback(false);
 
@@ -40,14 +35,14 @@ export const Countdown: React.FC<CountdownProps> = ({}) => {
 			<AnimatePresence>
 				{showPlayback && (
 					<motion.div
-					layout
-					key="playback"
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					className="mx-24"
-				>
-					<PlaybackDisplay />
-				</motion.div>
+						layout
+						key="playback"
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						className="mx-24"
+					>
+						<PlaybackDisplay />
+					</motion.div>
 				)}
 				{roundSection === RoundSection.PLAY && (
 					<motion.div
@@ -64,5 +59,3 @@ export const Countdown: React.FC<CountdownProps> = ({}) => {
 		</motion.div>
 	);
 };
-
-export type { CountdownProps };

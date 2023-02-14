@@ -17,7 +17,7 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 
 		const spotifyPlayerConstructorOptions: SpotifyPlayerConstructorOptions = {
 			name: config.SPOTIFY_WEB_PLAYBACK_DEVICE_NAME,
-			volume: config.SPOTIFY_WEB_PLAYBACK_DEFAULT_VOLUME,
+			volume: config.SPOTIFY_WEB_PLAYBACK_VOLUME,
 			getOAuthToken: callback => {
 				callback(getSpotifyToken());
 			}

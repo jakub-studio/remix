@@ -1,42 +1,55 @@
 import {
 	motion,
 	AnimatePresence,
-	useIsPresent,
-	usePresence
+	useIsPresent
 } from "framer-motion";
-import { RoundData } from "@/modules/state/types";
 import { useEffect, useState } from "react";
 import useTimeout from "@/hooks/useTimeout";
 import config from "@/config";
 import useGame from "@/modules/state";
+import { useCurrentRound } from "@/hooks/useCurrentRound";
 
 interface RoundIndicatorProps {
-	round: RoundData;
 	onComplete: () => void;
 }
 
 export const RoundIndicator: React.FC<RoundIndicatorProps> = ({
-	round,
 	onComplete
 }) => {
+	const { index } = useCurrentRound();
 	const [showText, setShowText] = useState(true);
 
 	useTimeout(() => {
 		setShowText(false);
 	}, config.ROUND_INDICATOR_DISPLAY_TIME_IN_SECONDS * 1000);
-	
+
+	const isExampleRound = index === -1;
+
+	const roundString =
+		isExampleRound ? "Example Round" : "Round " + (index + 1);
+
+	const roundSubText =
+		isExampleRound
+			? "No points will be awarded"
+			: `of ${useGame.getState().rounds.length}`;
 
 	return (
 		<AnimatePresence>
 			{showText && (
-				<RoundIndicatorInner round={round} onComplete={onComplete} />
+				<RoundIndicatorInner roundString={roundString} roundSubText={roundSubText} onComplete={onComplete} />
 			)}
 		</AnimatePresence>
 	);
 };
 
-export const RoundIndicatorInner: React.FC<RoundIndicatorProps> = ({
-	round,
+interface InnerProps extends RoundIndicatorProps {
+	roundString: string;
+	roundSubText: string;
+}
+
+export const RoundIndicatorInner: React.FC<InnerProps> = ({
+	roundString,
+	roundSubText,
 	onComplete
 }) => {
 	const isPresent = useIsPresent();
@@ -53,14 +66,7 @@ export const RoundIndicatorInner: React.FC<RoundIndicatorProps> = ({
 		setTimeout(safeToRemove, 500);
 	}, [isPresent, onComplete, safeToRemove]); */
 
-	const roundIndex = round.round; // This value can probably be renamed
-	const roundString =
-		roundIndex === -1
-			? "Example Round"
-			: "Round " + (roundIndex + 1);
 
-	const roundSubText =
-		roundIndex === -1 ? "No points will be awarded" : `of ${useGame.getState().rounds.length}`;
 
 	return (
 		<motion.div

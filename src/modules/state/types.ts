@@ -27,8 +27,6 @@ interface GameConfig {
 }
 
 interface RoundData {
-	round: number;
-	roundSection: RoundSection;
 	songData: SongDataExpanded;
 	trackData: Track;
 }
@@ -50,12 +48,18 @@ enum RoundSection {
 	ANSWER
 }
 
+interface CurrentRound {
+	index: number;
+	section: RoundSection;
+}
+
 interface GameState {
 	flowState: GameFlow;
 	cache: Record<string, unknown>;
 	config: GameConfig;
+	exampleRound: RoundData;
 	rounds: RoundData[];
-	current: RoundData;
+	currentRound: CurrentRound;
 }
 
 // enums must be exported regularly as they get transpiled to

@@ -1,8 +1,12 @@
 import { create } from "zustand";
-import { GameState, GameFlow, RoundData, RoundSection, SongDataExpanded } from "./types";
+import {
+	GameState,
+	GameFlow,
+	RoundData,
+	RoundSection,
+	SongDataExpanded
+} from "./types";
 import createLog from "debug";
-import { requestTrackData } from "../spotify/web-api";
-import { extractDataFromSpotifyURL } from "../spotify/uri";
 import { Track } from "../spotify/types";
 
 const logState = createLog("game-state");
@@ -32,9 +36,12 @@ const useGame = create<GameState>()(set => ({
 		}
 	},
 	rounds: [],
-	current: {
-		round: -1,
-		roundSection: 0,
+	currentRound: {
+		index: -1,
+		section: RoundSection.START
+	},
+	exampleRound: {
+		isExample: true,
 		songData: {
 			uri: "spotify:track:2HbKqm4o0w5wEeEFXm2sD4",
 			id: "2HbKqm4o0w5wEeEFXm2sD4",
@@ -42,7 +49,6 @@ const useGame = create<GameState>()(set => ({
 			submitter: "Example Submitter 1",
 			offset: [1, 21]
 		},
-
 		trackData: {
 			album: {
 				album_type: "album",
@@ -129,7 +135,9 @@ const useGame = create<GameState>()(set => ({
 			type: "track",
 			uri: "spotify:track:2HbKqm4o0w5wEeEFXm2sD4"
 		}
+
 	},
+
 }));
 
 Object.defineProperty(window, "gameState", {
@@ -150,13 +158,13 @@ export const progressGameFlow = (): void => {
 
 export const progressRoundSection = (): void => {
 	useGame.setState(state => {
-		const { current } = state;
-		const nextRoundSection = current.roundSection + 1;
+		const { currentRound } = state;
+		const nextRoundSection = currentRound.section + 1;
 		if (nextRoundSection > RoundSection.ANSWER) {
 			progressToNextRound();
 			return {};
 		}
-		return { current: { ...current, roundSection: nextRoundSection } };
+		return { currentRound: { ...currentRound, section: nextRoundSection } };
 	});
 };
 
@@ -174,74 +182,65 @@ export const progressRoundSection = (): void => {
 	}
 };  */
 
-export const generateRoundData2 = (songDataExpanded: SongDataExpanded, index: number, cache: Record<string, Track>): RoundData => {
+export const generateRoundData2 = (
+	songDataExpanded: SongDataExpanded,
+	index: number,
+	cache: Record<string, Track>
+): RoundData => {
 	//const gameState = useGame.getState();
 	//const song = gameState.rounds[songIndex];
 
 	// const songDataExpanded: SongDataExpanded = Object.assign(extractDataFromSpotifyURL(song.spotifyURL), song)
 
 	return {
-		round: index,
-		roundSection: RoundSection.START,
 		songData: songDataExpanded,
-		trackData: cache[songDataExpanded.uri] as Track,
-	}
-}; 
+		trackData: cache[songDataExpanded.uri] as Track
+	};
+};
 
 export const progressToNextRound = (): void => {
 	useGame.setState(state => {
-		const { current, rounds } = state;
-		const nextRound = current.round + 1;
+		const { currentRound } = state;
+		const nextRound = currentRound.index + 1;
 
 		if (nextRound >= state.config.game.songs.length) {
 			progressGameFlow();
 			return {};
 		}
 
-		// const nextRoundData = generateRoundData(nextRound);
-		const nextRoundData = rounds[nextRound];
-
 		return {
-			current: nextRoundData,
-		}
+			currentRound: {
+				section: RoundSection.START,
+				index: nextRound,
+			}
+		};
 	});
-}
+};
 
-export const cacheSpotifyTrack = async (id: string): Promise<void> => {
+/* export const cacheSpotifyTrack = async (id: string): Promise<void> => {
 	const data = await requestTrackData(id);
 
 	useGame.setState(state => {
 		const cache = {
 			...state.cache,
 			[data.uri]: data
-		}
+		};
 
 		return {
 			cache
-		}
+		};
 	});
-}
+};
 
-export const cacheNextRoundSpotifyTrack = async (currentRound: number): Promise<void> => {
+export const cacheNextRoundSpotifyTrack = async (
+	currentRound: number
+): Promise<void> => {
 	const nextRoundIndex = currentRound + 1;
 	const nextRound = useGame.getState().rounds[nextRoundIndex];
 
 	if (!nextRound) return;
 
 	await cacheSpotifyTrack(nextRound.songData.id);
-}
-
-
-/* export const prepareNextRoundData = (): void => {
-	useGame.setState(state => {
-		const { nextRoundCache } = state;
-		const nextRoundCacheIsAvailable = Object.hasOwn(nextRoundCache, "trackData");
-
-		const newRound = nextRoundCacheIsAvailable ? nextRoundCache : generateRoundData();
-		return {
-			current: newRound,
-		};
-	});
 }; */
 
 export default useGame;
