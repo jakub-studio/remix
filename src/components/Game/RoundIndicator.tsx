@@ -57,7 +57,7 @@ export const RoundIndicatorInner: React.FC<RoundIndicatorProps> = ({
 	const roundString =
 		roundIndex === -1
 			? "Example Round"
-			: "Round" + (roundIndex + 1);
+			: "Round " + (roundIndex + 1);
 
 	const roundSubText =
 		roundIndex === -1 ? "No points will be awarded" : `of ${useGame.getState().rounds.length}`;

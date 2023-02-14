@@ -152,27 +152,45 @@ export const progressRoundSection = (): void => {
 	useGame.setState(state => {
 		const { current } = state;
 		const nextRoundSection = current.roundSection + 1;
+		if (nextRoundSection > RoundSection.ANSWER) {
+			progressToNextRound();
+			return {};
+		}
 		return { current: { ...current, roundSection: nextRoundSection } };
 	});
 };
 
-export const generateRoundData = (songIndex: number): RoundData => {
+/* export const generateRoundData = (songIndex: number): RoundData => {
 	const gameState = useGame.getState();
-	const song = gameState.config.game.songs[songIndex];
+	const song = gameState.rounds[songIndex];
 
-	const songDataExpanded: SongDataExpanded = Object.assign(extractDataFromSpotifyURL(song.spotifyURL), song)
+	// const songDataExpanded: SongDataExpanded = Object.assign(extractDataFromSpotifyURL(song.spotifyURL), song)
 
 	return {
 		round: songIndex,
 		roundSection: RoundSection.START,
-		songData: songDataExpanded,
+		songData: gameSt,
 		trackData: gameState.cache[songDataExpanded.uri] as Track,
+	}
+};  */
+
+export const generateRoundData2 = (songDataExpanded: SongDataExpanded, index: number, cache: Record<string, Track>): RoundData => {
+	//const gameState = useGame.getState();
+	//const song = gameState.rounds[songIndex];
+
+	// const songDataExpanded: SongDataExpanded = Object.assign(extractDataFromSpotifyURL(song.spotifyURL), song)
+
+	return {
+		round: index,
+		roundSection: RoundSection.START,
+		songData: songDataExpanded,
+		trackData: cache[songDataExpanded.uri] as Track,
 	}
 }; 
 
 export const progressToNextRound = (): void => {
 	useGame.setState(state => {
-		const { current } = state;
+		const { current, rounds } = state;
 		const nextRound = current.round + 1;
 
 		if (nextRound >= state.config.game.songs.length) {
@@ -180,7 +198,8 @@ export const progressToNextRound = (): void => {
 			return {};
 		}
 
-		const nextRoundData = generateRoundData(nextRound);
+		// const nextRoundData = generateRoundData(nextRound);
+		const nextRoundData = rounds[nextRound];
 
 		return {
 			current: nextRoundData,
@@ -209,7 +228,7 @@ export const cacheNextRoundSpotifyTrack = async (currentRound: number): Promise<
 
 	if (!nextRound) return;
 
-	await cacheSpotifyTrack(nextRound.id);
+	await cacheSpotifyTrack(nextRound.songData.id);
 }
 
 

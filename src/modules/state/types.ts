@@ -54,7 +54,7 @@ interface GameState {
 	flowState: GameFlow;
 	cache: Record<string, unknown>;
 	config: GameConfig;
-	rounds: SongDataExpanded[];
+	rounds: RoundData[];
 	current: RoundData;
 }
 

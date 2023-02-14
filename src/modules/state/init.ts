@@ -1,7 +1,7 @@
 import { shuffleArray } from "@/util";
 import { extractDataFromSpotifyURL } from "@/modules/spotify/uri";
 
-import useGame from ".";
+import useGame, { generateRoundData2 } from ".";
 import { GameConfig, RoundSection, SongDataExpanded } from "./types";
 import { requestTrackData, requestTracksData } from "../spotify/web-api";
 import { Track } from "../spotify/types";
@@ -36,9 +36,11 @@ const initGame = async (givenConfig: GameConfig): Promise<void> => {
 
 	cache[exampleSongData.uri] = trackData;
 
+	const roundsArray = roundsWithURI.map((round, index) => generateRoundData2(round, index, cache));
+
 	useGame.setState({
 		config: givenConfig,
-		rounds: globalConfig.SHUFFLE_SONGS ? shuffleArray(roundsWithURI) : roundsWithURI,
+		rounds: globalConfig.SHUFFLE_SONGS ? shuffleArray(roundsArray) : roundsArray,
 		current: {
 			round: -1, // -1 indicates the example round
 			roundSection: RoundSection.START,

@@ -47,7 +47,7 @@ const PlaybackDisplay = () => {
 						);
 					})}
 				</div>
-				<div className="mt-2 text-lg uppercase tracking-wider font-medium">
+				<div className="mt-2 text-lg uppercase tracking-wider font-medium text-center">
 					<span>
 						{gameState.current.trackData.album.name},{" "}
 						{releaseDate}
