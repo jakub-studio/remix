@@ -10,11 +10,11 @@ export const convertTimeArrayToMs = (timeArray: TimeArray) => {
 	const [/* hours, */ minutes, seconds] = timeArray;
 
 	if (minutes < 0 || seconds < 0) {
-		throw new Error('Time cannot be negative');
+		throw new Error("Time cannot be negative");
 	}
 
 	if (Number.isNaN(minutes) || Number.isNaN(seconds)) {
-		throw new Error('Time cannot be NaN');
+		throw new Error("Time cannot be NaN");
 	}
 
 	return (
