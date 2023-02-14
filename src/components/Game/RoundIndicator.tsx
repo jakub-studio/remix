@@ -1,8 +1,4 @@
-import {
-	motion,
-	AnimatePresence,
-	useIsPresent
-} from "framer-motion";
+import { motion, AnimatePresence, useIsPresent } from "framer-motion";
 import { useEffect, useState } from "react";
 import useTimeout from "@/hooks/useTimeout";
 import config from "@/config";
@@ -25,18 +21,20 @@ export const RoundIndicator: React.FC<RoundIndicatorProps> = ({
 
 	const isExampleRound = index === -1;
 
-	const roundString =
-		isExampleRound ? "Example Round" : "Round " + (index + 1);
+	const roundString = isExampleRound ? "Example Round" : "Round " + (index + 1);
 
-	const roundSubText =
-		isExampleRound
-			? "No points will be awarded"
-			: `of ${useGame.getState().rounds.length}`;
+	const roundSubText = isExampleRound
+		? "No points will be awarded"
+		: `of ${useGame.getState().rounds.length}`;
 
 	return (
 		<AnimatePresence>
 			{showText && (
-				<RoundIndicatorInner roundString={roundString} roundSubText={roundSubText} onComplete={onComplete} />
+				<RoundIndicatorInner
+					roundString={roundString}
+					roundSubText={roundSubText}
+					onComplete={onComplete}
+				/>
 			)}
 		</AnimatePresence>
 	);
@@ -65,8 +63,6 @@ export const RoundIndicatorInner: React.FC<InnerProps> = ({
 		onComplete(); // onComplete will progress the round and start the actual game/playing part
 		setTimeout(safeToRemove, 500);
 	}, [isPresent, onComplete, safeToRemove]); */
-
-
 
 	return (
 		<motion.div

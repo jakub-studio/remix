@@ -135,9 +135,7 @@ const useGame = create<GameState>()(set => ({
 			type: "track",
 			uri: "spotify:track:2HbKqm4o0w5wEeEFXm2sD4"
 		}
-
-	},
-
+	}
 }));
 
 Object.defineProperty(window, "gameState", {
@@ -211,7 +209,7 @@ export const progressToNextRound = (): void => {
 		return {
 			currentRound: {
 				section: RoundSection.START,
-				index: nextRound,
+				index: nextRound
 			}
 		};
 	});

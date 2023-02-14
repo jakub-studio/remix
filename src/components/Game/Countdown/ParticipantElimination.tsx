@@ -1,8 +1,4 @@
-import {
-	useCallback,
-	useMemo,
-	useState
-} from "react";
+import { useCallback, useMemo, useState } from "react";
 import useGame, { progressRoundSection } from "@/modules/state";
 import useInterval from "@/hooks/useInterval";
 import c from "clsx";
@@ -24,8 +20,7 @@ export const ParticipantElimination: React.FC = () => {
 
 	const eliminationDelay: number = useMemo(() => {
 		const delay =
-			(gameConfig.roundDurationInSeconds * 1000) /
-			participants.length;
+			(gameConfig.roundDurationInSeconds * 1000) / participants.length;
 		return delay;
 	}, [gameConfig.roundDurationInSeconds, participants.length]);
 

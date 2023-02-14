@@ -8,6 +8,6 @@ export const useCurrentRound = () => {
 	return {
 		index,
 		section,
-		roundData,
+		roundData
 	};
 };

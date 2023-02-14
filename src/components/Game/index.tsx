@@ -2,9 +2,7 @@ import { useEffect } from "react";
 
 import ImageBackdrop from "../ImageBackdrop";
 
-import {
-	progressRoundSection
-} from "@/modules/state";
+import { progressRoundSection } from "@/modules/state";
 import { RoundIndicator } from "./RoundIndicator";
 import { RoundSection } from "@/modules/state/types";
 import { Countdown } from "./Countdown";
@@ -36,19 +34,13 @@ const Game = () => {
 				: void 0
 		);
 		setVolume(config.SPOTIFY_WEB_PLAYBACK_VOLUME);
-	}, [
-		currentRound.songData.uri,
-		currentRound.songData.offset,
-		index
-	]);
+	}, [currentRound.songData.uri, currentRound.songData.offset, index]);
 
 	return (
 		<ImageBackdrop imageSrc={bgImage}>
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-center p-10 drop-shadow-md">
 				{section === RoundSection.START ? (
-					<RoundIndicator
-						onComplete={progressRoundSection}
-					/>
+					<RoundIndicator onComplete={progressRoundSection} />
 				) : (
 					<Countdown />
 				)}

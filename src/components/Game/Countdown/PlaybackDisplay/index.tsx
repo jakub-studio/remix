@@ -40,9 +40,7 @@ const PlaybackDisplay = () => {
 							<span key={index} className="font-medium text-3xl mb-4">{`${
 								artist.name
 							}${
-								index < roundData.trackData.artists.length - 1
-									? ", "
-									: ""
+								index < roundData.trackData.artists.length - 1 ? ", " : ""
 							}`}</span>
 						);
 					})}

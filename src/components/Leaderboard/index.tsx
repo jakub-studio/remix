@@ -7,7 +7,6 @@ import background from "@/assets/background.jpeg";
 import { useHotkeys } from "react-hotkeys-hook";
 import ImageBackdrop from "../ImageBackdrop";
 
-
 const Leaderboard: React.FC = () => {
 	return (
 		<ImageBackdrop imageSrc={background}>

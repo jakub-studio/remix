@@ -1,8 +1,5 @@
-import {
-	motion,
-	AnimatePresence,
-} from "framer-motion";
-import {  RoundSection } from "@/modules/state/types";
+import { motion, AnimatePresence } from "framer-motion";
+import { RoundSection } from "@/modules/state/types";
 import { useState } from "react";
 import { progressToNextRound } from "@/modules/state";
 import { ParticipantElimination } from "./ParticipantElimination";
