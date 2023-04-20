@@ -2,11 +2,10 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import c from "clsx";
 
 import initGame from "@/modules/state/init";
-
 import useSpotify from "@/modules/spotify/state";
-import { getSpotifyToken, setSpotifyToken } from "@/modules/spotify/token";
+import { setSpotifyToken } from "@/modules/spotify/token";
 import { connectSpotifyPlayer } from "@/modules/spotify";
-import useGame, { progressGameFlow } from "@/modules/state";
+import { progressGameFlow } from "@/modules/state";
 
 const ConfigWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
@@ -123,6 +122,8 @@ const Config: React.FC = () => {
 					value={tokenValue}
 					onChange={onTokenValueChange}
 				/>
+
+
 
 				{/* Game Config */}
 				<div className="flex items-center gap-2">

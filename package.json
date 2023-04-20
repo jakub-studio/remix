@@ -12,6 +12,7 @@
 		"types": "tsc"
 	},
 	"dependencies": {
+		"@radix-ui/react-slider": "^1.1.1",
 		"clsx": "^1.2.1",
 		"debug": "^4.3.4",
 		"framer-motion": "^10.12.4",

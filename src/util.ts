@@ -34,3 +34,7 @@ export const splitArrayIntoChunks = <T>(
 	}
 	return chunks;
 };
+
+export const getLastElementOfArray = <T>(array: T[]): T => {
+	return array[array.length - 1];
+}
