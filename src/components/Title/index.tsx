@@ -26,7 +26,7 @@ const Title: React.FC = () => {
 	});
 
 	return (
-		<ImageBackdrop imageSrc={background}>
+		<ImageBackdrop>
 			{/* Title */}
 			<div className="absolute top-0 left-0 w-full h-full flex items-center justify-start pl-20">
 				<motion.div
