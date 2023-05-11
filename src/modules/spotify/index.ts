@@ -10,7 +10,7 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 	// Create a global callback called onSpotifyWebPlaybackSDKReady
 	// This will be called when the SDK is ready and Spotify.Player is available
 	// <any> skips type checking on window
-	(<any>window).onSpotifyWebPlaybackSDKReady = () => {
+	(window as any).onSpotifyWebPlaybackSDKReady = () => {
 		// You can now initialize Spotify.Player and use the SDK
 
 		useSpotify.setState({ sdkReady: true });
@@ -23,7 +23,7 @@ const prepareSpotifyWebPlaybackSDKReadyCallback = (): void => {
 			}
 		};
 
-		const player: SpotifyPlayer = new (<any>window).Spotify.Player(
+		const player: SpotifyPlayer = new (window as any).Spotify.Player(
 			spotifyPlayerConstructorOptions
 		);
 

@@ -1,0 +1,13 @@
+/* Generated with https://csshero.org/mesher/ */
+
+.defaultMeshBackground {
+	background-color:#ff99fc;
+	background-image:
+		radial-gradient(at 69% 30%, hsla(215,77%,70%,1) 0px, transparent 50%),
+		radial-gradient(at 25% 59%, hsla(273,69%,68%,1) 0px, transparent 50%),
+		radial-gradient(at 9% 55%, hsla(253,60%,70%,1) 0px, transparent 50%),
+		radial-gradient(at 26% 18%, hsla(285,75%,65%,1) 0px, transparent 50%),
+		radial-gradient(at 30% 59%, hsla(13,71%,65%,1) 0px, transparent 50%),
+		radial-gradient(at 20% 90%, hsla(42,70%,69%,1) 0px, transparent 50%),
+		radial-gradient(at 50% 10%, hsla(211,92%,72%,1) 0px, transparent 50%);
+}

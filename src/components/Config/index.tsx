@@ -2,21 +2,23 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import c from "clsx";
 
 import initGame from "@/modules/state/init";
-
 import useSpotify from "@/modules/spotify/state";
-import { getSpotifyToken, setSpotifyToken } from "@/modules/spotify/token";
+import { setSpotifyToken } from "@/modules/spotify/token";
 import { connectSpotifyPlayer } from "@/modules/spotify";
-import useGame, { progressGameFlow } from "@/modules/state";
+import { progressGameFlow } from "@/modules/state";
+import ImageBackdrop from "../ImageBackdrop";
 
 const ConfigWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<div className="w-full">
+		<ImageBackdrop>
+			<div className="w-full">
 			<div className="mx-12 my-10">
-				<h1 className="font-bold">Remix Icebreaker Game</h1>
+				<h1 className="font-bold text-3xl">Remix</h1>
 				<hr className="my-2 border-gray-600 w-full" />
 				{children}
 			</div>
-		</div>
+			</div>
+		</ImageBackdrop>
 	);
 };
 
@@ -123,6 +125,8 @@ const Config: React.FC = () => {
 					value={tokenValue}
 					onChange={onTokenValueChange}
 				/>
+
+
 
 				{/* Game Config */}
 				<div className="flex items-center gap-2">

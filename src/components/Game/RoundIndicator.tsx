@@ -52,17 +52,10 @@ export const RoundIndicatorInner: React.FC<InnerProps> = ({
 }) => {
 	const isPresent = useIsPresent();
 
+	// This will execute onComplete 500ms after the component is unmounted.
 	useEffect(() => {
 		!isPresent && setTimeout(onComplete, 500);
 	}, [isPresent, onComplete]);
-
-	/* 	useEffect(() => {
-		if (isPresent) return;
-		// The following code will run when the component is removed
-
-		onComplete(); // onComplete will progress the round and start the actual game/playing part
-		setTimeout(safeToRemove, 500);
-	}, [isPresent, onComplete, safeToRemove]); */
 
 	return (
 		<motion.div

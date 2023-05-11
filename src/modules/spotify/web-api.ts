@@ -60,14 +60,14 @@ export const requestTracksData = async (ids: string[]): Promise<Track[]> => {
 
 export const playTrack = async (
 	uri: string,
-	offset?: number
+	offsetMs?: number
 ): Promise<void> => {
 	const body: Record<string, unknown> = {
 		uris: [uri]
 	};
 
-	if (offset) {
-		body["position_ms"] = offset;
+	if (offsetMs) {
+		body["position_ms"] = offsetMs;
 	}
 
 	const response = await fetch(
